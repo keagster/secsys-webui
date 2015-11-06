@@ -71,15 +71,29 @@
     <p>
         <button type="button" class="btn btn-lg btn-primary">Disarm Primary</button>
         <button type="button" class="btn btn-lg btn-success">Garage Door</button>
-        <h1 class="panel-heading" id="jsontest">data</h1>
+        <h1 class="panel-heading" id="jsontest" style="color: rgb(45, 255, 59)">data</h1>
     </p>
     <script>
-        var json_test = new XMLHttpRequest();
-        json_test.open("GET", "http://localhost:8000/gpio/", false);
-        json_test.send();
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8000/gpio/', true);
+
+        // If specified, responseType must be empty string or "text"
+        xhr.responseType = 'text';
+
+        xhr.onload = function () {
+            if (xhr.readyState === xhr.DONE) {
+                if (xhr.status === 200) {
+                    console.log(xhr.response);
+                    console.log(xhr.responseText);
+                }
+            }
+        };
+
+        xhr.send(null);
     </script>
     <script>
-        document.getElementsByClassName("panel-heading")[0].innerHTML = "GPI ONE: " + json_test.toString();
+        var response = xhr.responseText
+        document.getElementsByClassName("panel-heading")[0].innerHTML = "GPI ONE: " + response.length;
     </script>
 </div> <!-- /container -->
 
